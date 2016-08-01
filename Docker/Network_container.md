@@ -16,7 +16,13 @@ Nếu dùng ```--net=host``` thì các container sẽ sử dụng mạng của m
 
 Nói chung, ta không nên sử dụng cấu hình này vì lí do an ninh, nhưng nó có thể hữu ích khi ta cần hiệu suất mạng tốt nhất bởi vì nó là nhanh nhất.
 ## Bridge Network
-Network ```bridge``` được đại diện cho network ```docker0``` trong cấu hình ```ifconfig```.
+Network ```bridge``` là default network trong Docker.
+
+Chúng ta có thể xem thông tin chi tiết về network ```bridge``` bằng cách sử dụng câu lệnh:
+```sh
+$ docker network inspect bridge
+```
+Network ```bridge``` được đại diện bởi ```docker0``` trong cấu hình ```ifconfig```. Khi thêm một container, chúng sẽ có một địa chỉ IP có cùng dải mạng với ```docker0```
 ```sh
 $ ifconfig
 
@@ -29,3 +35,4 @@ docker0   Link encap:Ethernet  HWaddr 02:42:47:bc:3a:eb
           collisions:0 txqueuelen:0
           RX bytes:1100 (1.1 KB)  TX bytes:648 (648.0 B)
 ```
+Điều này cho phép các container có thể giao tiếp được với máy host cũng như giao tiếp được với các container khác trên cùng 1 host.
