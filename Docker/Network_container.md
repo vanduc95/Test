@@ -36,3 +36,8 @@ docker0   Link encap:Ethernet  HWaddr 02:42:47:bc:3a:eb
           RX bytes:1100 (1.1 KB)  TX bytes:648 (648.0 B)
 ```
 Điều này cho phép các container có thể giao tiếp được với máy host cũng như giao tiếp được với các container khác trên cùng 1 host.
+
+Để xem thông tin chi tiết về một network, ta dùng lệnh ```docker network inspect <name_network>```, nó sẽ trả về thông tin dưới dạng 1 file json.
+
+Với các ```default network```, chúng ta chỉ có thể liệt kê và inspect mà không thể xóa chúng. Chúng là mặc định khi cài Docker. Tuy nhiên có thể tự tạo một ``` user-defined networks```, nó có thể remove khi bạn không cần đến nó nữa.
+# User-defined networks
