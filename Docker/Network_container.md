@@ -1,4 +1,8 @@
 Tài liệu này cung cấp cái nhìn tổng quát về networking trong contrainer. Mô tả các network được tạo mặc định và làm thế nào để tự tạo một network (user-defined networks). Ngoài ra tài liệu còn hướng dẫn cách kết nối giữa Docker container và host, giữa các container với nhau.
+# Basic Containner Networking
+Khi chúng ta cài đặt Docker, nó sẽ cấu hình một virtual bridge(cầu ảo) - ```docker0``` trên Docker host. Docker chọn một subnet chưa được sử dụng trên host và gán một địa chỉ IP cho ```docker0```. Virtual bridge này sẽ xử lí tất cả các giao tiếp giữa container và host.
+
+Khi chạy một container, mặc định nó sẽ tạo một 
 # Default Networks
 Khi cài đặt Docker, nó sẽ tự động tạo ra 3 networks. Bạn có thể liệt kê ra các network này bằng cách sử dụng lệnh ```docker network ls```
 ```sh
@@ -41,3 +45,4 @@ docker0   Link encap:Ethernet  HWaddr 02:42:47:bc:3a:eb
 
 Với các ```default network```, chúng ta chỉ có thể liệt kê và inspect mà không thể xóa chúng. Chúng là mặc định khi cài Docker. Tuy nhiên có thể tự tạo một ``` user-defined networks```, nó có thể remove khi bạn không cần đến nó nữa.
 # User-defined networks
+
