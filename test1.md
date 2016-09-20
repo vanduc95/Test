@@ -129,9 +129,9 @@ Ngoài ra ta cần convert lại 2 thuộc tính là `create` và `name`  để 
  
  Ta cũng cần có một `url` và một file `index.html` để có thể render được dữ liệu sang dạng bảng.  Các bạn xem code để biết thêm chi tiết.
 
-3. Tạo actions cho table
+3. Tạo actions cho table Container
 -------
-### 3.1 Action **"Delete"**
+### 3.1 Action **Delete**
 Để tạo action **delete**, trong file `tables.py` ta cần định nghĩa lớp `DeleteContainerAction` như sau:
 ```
 class DeleteContainerAction(tables.DeleteAction):
@@ -317,4 +317,81 @@ Cuối cùng ta quy đinh class **ContainerFixedFilter** này trong thuộc tín
     table_actions = (ContainerFixedFilter,)
     row_class = UpdateRow
 
-### 3.3 Action **"Create"**
+### 3.3 Action **Create**
+Trong bài viết này, ta sẽ tạo một action **Create Container** đơn giản với form gồm 2 trường là **Image Resouce ** và **Name Container**.
+
+Đầu tiên, trong file `tables.py` ta định nghĩa class **CreateContainer** kế thừa class **tables.LinkAction** 
+
+```
+class CreateContainer(tables.LinkAction):
+    name = "create"
+    verbose_name = _("Create Container")
+    url = "horizon:custom_horizon:container:create"
+    classes = ("ajax-modal",)
+    icon = "plus"
+```
+
+Tiếp theo trong file `views.py` ta định nghĩa class **CreateView** như sau:
+
+```
+from openstack_dashboard.dashboards.custom_horizon.container import forms as create_forms
+...
+
+class CreateView(forms.ModalFormView):
+    form_class = create_forms.CreateContainerForm
+    form_id = "create_image_form"
+    modal_header = _("Create An Container")
+    # submit_label = _("Create Image")
+    submit_url = reverse_lazy('horizon:custom_horizon:container:create')
+    template_name = 'custom_horizon/container/create.html'
+    success_url = reverse_lazy("horizon:custom_horizon:container:index")
+    page_title = _("Create An Container")
+```
+
+Form hiển thị để nhập thông tin khi **Create Container** sẽ được quy định tại thuộc tính `form_class`. Ở đây ta cần tạo một file `forms.py` trong thư mục `openstack_dashboard/dashboards/custom_horizon/container`. File này có nhiệm vụ tạo form **Create**, đồng thời xử lí sự kiện.
+
+```
+from django.utils.translation import ugettext_lazy as _
+
+from horizon import exceptions
+from horizon import forms
+from docker import Client
+
+
+def get_name_images():
+    IMAGES = [('-1', _('Select Image'))]
+    cli = Client(base_url='unix://var/run/docker.sock')
+    for image in cli.images():
+        repo = image['RepoTags']
+        repoTags = repo[0]
+        IMAGES.append((repoTags, _(repoTags)))
+
+    return IMAGES
+
+
+class CreateContainerForm(forms.SelfHandlingForm):
+
+
+    image = forms.ChoiceField(
+        label=_('Image Source'),
+        choices=get_name_images(),
+        )
+    name = forms.CharField(max_length=255, label=_("Name Container"),required=False)
+    def handle(self, request, data):
+        try:
+            cli = Client(base_url='unix://var/run/docker.sock')
+            cli.create_container(image=data['image'], name=data['name'])
+        except Exception:
+            exceptions.handle(request, _('Unable to create container.'))
+            return False
+        return True
+```
+Phương thức `get_name_images()` trả về một list tên các image docker, được dùng trong thuộc tính `choices` của class **forms.ChoiceField**.
+
+Ta xem xét phương thức `handle(self, request, data)` , phương thức này làm nhiệm vụ xử lí khi người dùng click vào button **Submit** trong form.  Command [cli.create_container()](https://docker-py.readthedocs.io/en/latest/api/#create_container) được sử dụng để create container.
+
+Tiếp theo, chúng ta cũng cần tạo ra 2 file `create.html` và `_create.html` trong thư mục `custom_horizon/container/templates/container` để render form sang hmtl hiển thi lên giao diện.
+
+Cuối cùng ta quy đinh class **CreateContainer** này trong thuộc tính **table_actions** tại class **Meta**
+
+    table_actions = (CreateContainer,)
