@@ -3,7 +3,7 @@
 Bài viết này sẽ hướng dẫn mọi người cách làm các task về Docker trong Horizon sau:
 
  - Tạo 1 panel **container** chứa bảng hiển thị thông tin các container và có các action **create container**, **delete container**, **filter container**
- -  Biểu đồ hình đường biểu diễn **resource usage** của container.
+ -  Các biểu đồ biểu diễn **resource usage** của container.
 
 Ở hướng dẫn này mình chỉ giải thích tác dụng của các đoạn code quan trọng, mọi người nên đọc trước bài hướng dẫn về luông hoạt động khi tạo ra một **Table** trong Horizon tại [đây](#) 
 
@@ -395,3 +395,10 @@ Tiếp theo, chúng ta cũng cần tạo ra 2 file `create.html` và `_create.ht
 Cuối cùng ta quy đinh class **CreateContainer** này trong thuộc tính **table_actions** tại class **Meta**
 
     table_actions = (CreateContainer,)
+
+4. Biểu đồ biểu diễn resource usage container
+-------
+Phần này sẽ được mình trình bày trong [bài tiếp theo](#) cụ thể hơn. Bài đó sẽ giới thiệu mọi người **cAdvisor - công cụ giám sát tài nguyên sử dụng của Google** và cách dùng RESTful API để lấy các thông tin sử dụng tài nguyên từ các máy ảo OpenStack triển khai Docker.
+
+
+Như vậy mình đã hướng dẫn xong mọi người cách tạo **Table** hiển thị các thông tin đơn giản về Docker cũng như tạo các action cho nó. Còn rất nhiều chức năng và thuộc tính hay trong Horizon và Docker, bạn có thể tự custom các dashboard khác dựa trên những gì mình đã trình bày ở trên :)) 
