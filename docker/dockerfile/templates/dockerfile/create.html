@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+
+{% load i18n %}
+{% block title %}{% trans "Create Dockerfile" %}{% endblock %}
+
+{% block main %}
+    <h2>Sks</h2>
+  {% include 'docker/dockerfile/_create.html' %}
+{% endblock %}
+
