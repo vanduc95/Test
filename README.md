@@ -2,11 +2,8 @@ Introduction to networking in OpenStack
 =========
 
 
-----------
 
-
-1. Basic networking
-----------------------------
+#1. Basic networking
 
 ##Ethernet
 Ethernet là một trong những công nghệ phổ biến nhất để tạo ra mạng cục bộ (LAN). 
