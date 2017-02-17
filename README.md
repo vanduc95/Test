@@ -1,9 +1,8 @@
 Introduction to networking in OpenStack
 =========
 
-
-
 #1. Basic networking
+
 
 ###Ethernet
 Ethernet là một trong những công nghệ phổ biến nhất để tạo ra mạng cục bộ (LAN). 
@@ -53,14 +52,48 @@ Quá trình cấp phát IP được mô tả như hình dưới đây
 
 Trong OpenStack, phần mềm thứ 3 có tên là [dnsmasq](http://www.thekelleys.org.uk/dnsmasq/doc.html)  được dùng để implement dịch vụ DHCP server.
 
-#2. Network components
+#2. Network devices
+Khi nói đến network, có 2 thiết bị mạng cơ bản và  quan trọng cho phép nhiều thiết bị có thể kết nối được với nhau đó là switch và router. 
 
 ###Switch
 
-Switch thông thường được biết đến như là một "thiết bị chuyển mạch". Nó là thiết bị mạng thuộc tầng 2 trong mô hình OSI (Data Link Layer). Nó có thể coi là một Bridge có nhiều cổng. Switch chuyển tiếp các frame dựa trên địa chỉ MAC. Switch tập trung các kết nối và quyết định chọn đường dẫn để truyền dữ liệu hiệu quả. Frame được chuyển mạch từ cổng input đến cổng output và đến được node đích như mong muốn
+Switch thông thường được biết đến như là một "thiết bị chuyển mạch". Nó là thiết bị mạng thuộc tầng 2 trong mô hình OSI (Data Link Layer). Nó có thể coi là một Bridge có nhiều cổng. Switch chuyển tiếp các frame dựa trên địa chỉ MAC. Switch tập trung các kết nối và quyết định chọn đường dẫn để truyền dữ liệu hiệu quả sử dụng cơ chế tự học tính toán bảng MAC Table. Dữ liệu được đóng gói trong frame được chuyển mạch từ cổng input đến cổng output và đến được node đích như mong muốn.
 
+![enter image description here](http://vnreview.vn/image/14/69/73/1469738.jpg?t=1448523262236)
 
-##Router
+###Router
 Router là thiết bị mạng thuộc tầng 3 trong mô hình OSI (Network layer). Nó còn được gọi là "thiết bị định tuyến hoặc bộ định tuyến" có chức năng chuyển các gói dữ liệu (packet) qua một liên mạng đến các đầu cuối dựa trên địa chỉ IP thông qua một tiến trình gọi là định tuyến.
 
+![enter image description here](http://vnreview.vn/image/14/69/73/1469738.jpg?t=1448523262236)
 
+# Network address translation (NAT)
+
+Trong IPv4, có 2 loại địa chỉ IP là IP public và IP private.
+
+ IP public là địa chỉ được cung cấp bởi ISP (Internet Service Provider) khi bạn kết nối vào Internet, nó là địa chỉ dùng để xác định máy tính của bạn trên Internet là duy nhất. Khác với IP public, IP private là địa chỉ dùng để xác định máy tính của bạn trên một mạng riêng nào đó như mạng nội bộ... và được quyền gán bất kì địa chỉ IP nào tùy thích miễn là nằm trong dải IP được quy định sẵn cho mạng private. Các địa chỉ nằm trong dải đó là:  
+
+> Lớp A:  10.0.0.0 đến 10.255.255.255
+> 
+> Lớp B: 172.16.0.0 đến 172.31.255.255
+> 
+> Lớp C: 192.168.0.0 đến 192.168.255.255
+
+Máy tính chỉ ra ngoài internet được khi nó có địa chỉ public vì địa chỉ public là duy nhất, do vậy cần phải có một kĩ thuật để chuyển đồi các IP private trong mạng cục bộ thành IP public để ra ngoài internet và ngược lại để các máy ngoài internet có thể gửi trả dữ liệu cho các máy trong mạng cục bộ. **NAT được tạo ra để giải quyết vấn đề này**
+
+Kỹ thuật NAT dùng để chuyển tiếp các gói tin giữa những lớp mạng khác nhau trên một mạng lớn. NAT dịch hay thay đổi một hoặc cả hai địa chỉ bên trong một gói tin khi gói đó đi qua router, hay một số thiết bị khác.
+
+Sau đây ta sẽ đề cập đến một số loại NAT cơ bản sau:
+
+###Static NAT (NAT tĩnh)
+Static NAT (NAT tĩnh) là phương thức NAT một đôi một. Một địa chỉ IP Private sẽ được map với một địa chỉ IP Public.
+ 
+Trong Static NAT (NAT tĩnh), địa chỉ IP của máy tính là 192.168.32.10 luôn được Router biên dịch đến địa chỉ IP 213.18.123.110.
+
+###Dynamic NAT (NAT động)
+Một địa chỉ IP Private sẽ được map với một địa chỉ IP Public trong nhóm địa chỉ IP Public.
+
+Trong Dynamic NAT (NAT động), máy tính có địa chỉ IP 192.168.32.10 luôn được Router biên dịch đến địa chỉ đầu tiên 213.18.123.100 trong dãy địa chỉ IP từ 213.18.123.100  đến 213.18.123.150.
+###Overloading NAT
+NAT Overloading là một dạng thức của NAT động (Dynamic Overload). Nhiều địa chỉ IP Private sẽ được map với một địa chỉ IP Public qua các Port (cổng) khác nhau.
+
+Trong Overloading NAT, mỗi máy tính trong mạng nội bộ (Private Network) được Router biên dịch đến cùng một địa chỉ IP 213.18.123.100 nhưng trên các cổng giao tiếp khác nhau.
