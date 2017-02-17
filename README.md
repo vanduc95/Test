@@ -59,9 +59,8 @@ Trong OpenStack, phần mềm thứ 3 có tên là [dnsmasq](http://www.thekelle
 
 Switch thông thường được biết đến như là một "thiết bị chuyển mạch". Nó là thiết bị mạng thuộc tầng 2 trong mô hình OSI (Data Link Layer). Nó có thể coi là một Bridge có nhiều cổng. Switch chuyển tiếp các frame dựa trên địa chỉ MAC. Switch tập trung các kết nối và quyết định chọn đường dẫn để truyền dữ liệu hiệu quả. Frame được chuyển mạch từ cổng input đến cổng output và đến được node đích như mong muốn
 
-![enter image description here](https://vietadsgroup.vn/Uploads/files/switch-lam-gi.jpg)
 
 ##Router
 Router là thiết bị mạng thuộc tầng 3 trong mô hình OSI (Network layer). Nó còn được gọi là "thiết bị định tuyến hoặc bộ định tuyến" có chức năng chuyển các gói dữ liệu (packet) qua một liên mạng đến các đầu cuối dựa trên địa chỉ IP thông qua một tiến trình gọi là định tuyến.
 
-![enter image description here](http://vnreview.vn/image/14/69/73/1469738.jpg?t=1448523262236)
+
