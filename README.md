@@ -5,19 +5,19 @@ Introduction to networking in OpenStack
 
 #1. Basic networking
 
-##Ethernet
+###Ethernet
 Ethernet là một trong những công nghệ phổ biến nhất để tạo ra mạng cục bộ (LAN). 
 
 Trong mô hình OSI, Ethernet là giao thức ở tầng **datalink** mô tả cách thức để các thiết bị mạng có thể định dạng dữ liệu và truyền chúng tới các thiết bị khác trên cùng một mạng.
 
  Mỗi thiết bị trên mạng Ethernet được định danh duy nhất  bởi địa chỉ MAC. Nhờ địa chỉ MAC, hai thiết bị giao tiếp được với nhau bằng cách gửi đi các *frame* đã đóng gói địa chỉ MAC nguồn và địa chỉ MAC đích và chúng được chuyển tiếp nhờ thiết bị mạng được gọi là switch.
 
-##VLANs
+###VLANs
 VLAN ( virtual LAN) là một kĩ thuật mạng cho phép chia một miền quảng bá vật lí ra thành nhiều mạng cục bộ độc lập nhau.  Mỗi mạng cục bộ được đặc trưng bởi một định danh, đó là VLAN ID. Cụ thể, khi sử dụng VLAN, nếu 2 máy cùng kết nối tới cùng một switch nhưng được định nghĩa ở 2 mạng VLAN khác nhau thì không thể giao tiếp được với nhau.  
 
 Tham khảo chi tiết [tại đây](https://github.com/cloudcomputinghust/openstack-manual/blob/master/Introduction-to-OpenStack-networking/OpenStack-networking-Layer2-Introduction.md)
 
-##ARP 
+###ARP 
 
 Trong hệ thông mạng có 2 loại địa chỉ được gán cho một máy tính là địa chỉ IP và địa chỉ MAC.  Trong thực tế, các card mạng chỉ có thể hiểu và liên lạc với nhau bằng địa chỉ MAC. Vì vậy, để các máy có thể hiểu và liên lạc với nhau trong môi trường mạng, cần có một cơ chế diễn giải địa chỉ giữa IP và MAC. Đó là giao thức **Address Resolution Protocol** viết tắt là  **ARP**
 
@@ -33,7 +33,7 @@ Giả sử máy A có địa chỉ IP là **192.168.1.5/24** và muốn gửi m�
  - Lúc này máy A đã có địa chỉ MAC của máy B và máy A có thể bắt đầu
    truyền gói tin cho máy B.
 
-##DHCP
+###DHCP
 
 DHCP (Dynamic Host Configuration Protocol) là giao thức cho phép cấp phát địa chỉ IP một cách tự động cho clients. Mục đích quan trọng nhất là tránh trường hợp hai máy tính khác nhau lại có cùng địa chỉ IP.
 
@@ -53,9 +53,9 @@ Quá trình cấp phát IP được mô tả như hình dưới đây
 
 Trong OpenStack, phần mềm thứ 3 có tên là [dnsmasq](http://www.thekelleys.org.uk/dnsmasq/doc.html)  được dùng để implement dịch vụ DHCP server.
 
-2. Network components
---------------------------
-##Switch
+#2. Network components
+
+###Switch
 
 Switch thông thường được biết đến như là một "thiết bị chuyển mạch". Nó là thiết bị mạng thuộc tầng 2 trong mô hình OSI (Data Link Layer). Nó có thể coi là một Bridge có nhiều cổng. Switch chuyển tiếp các frame dựa trên địa chỉ MAC. Switch tập trung các kết nối và quyết định chọn đường dẫn để truyền dữ liệu hiệu quả. Frame được chuyển mạch từ cổng input đến cổng output và đến được node đích như mong muốn
 
