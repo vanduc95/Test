@@ -2,7 +2,10 @@ Linux Bridge
 ========
 Bài viết note lại các kiến thức tìm hiểu được về Linux-bridge
 
-#Linux Bridge – The Basics
+# Linux Bridge – The Basics
+
+Nguyễn Văn Đức 
+
 Linux bridge là một phần mềm đươc tích hợp vào trong nhân Linux để giải quyết vấn đề ảo hóa phần network trong các máy vật lý. Mặc dù được gọi là bridge, nhưng thực chất linux-bridge tạo ra một switch ảo, sử dụng với ảo hóa KVM/QEMU để các VMs có thể kết nối được với nhau cũng như kết nối được ra bên ngoài.
 
 Một linux-bridge có thể được tạo, xóa và quản lí nhờ command line tool được gọi là **brctl**. Để sử dụng **brctl** trên Ubuntu hoặc Debian , chúng ta cần cài package sau: 
