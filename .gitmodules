@@ -1,0 +1,3 @@
+[submodule "python-tutorial"]
+	path = python-tutorial
+	url = https://github.com/vanduc95/python-tutorial.git
